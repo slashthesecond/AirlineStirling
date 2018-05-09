@@ -1,0 +1,108 @@
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class GateInfoDatabaseTests {
+
+	GateInfoDatabase gid;
+
+	@Before
+	public void setUp() {
+		gid = new GateInfoDatabase();
+	}
+
+	@Test
+	public void testGetStatuses() {
+
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Takes a gate number and a flight code, allocates it a gate and checks if the
+	 * gates have been filled (Reserved, not occupied)
+	 */
+
+	@Test
+	public void testAllocate() {
+
+		// Allocates flights to both gates with random flight codes
+		gid.allocate(0, 8080); 
+		gid.allocate(1, 676767); 
+		
+		//Ensures the gates have been allocated correctly and have been set to reserved(1)
+		assertEquals(1, gid.getStatus(1)); 
+		assertEquals(1, gid.getStatus(0)); 
+
+	}
+
+	/**
+	 * Testing to see the status of the gates. 
+	 * Firstly if they are free, then if
+	 * they are then filled.
+	 */
+
+	@Test
+	public void testDocked() {
+		
+		//Ensures the gates are initalized to status code(0) or "free"
+		assertEquals(0, gid.getStatus(0)); 
+		assertEquals(0, gid.getStatus(1)); 
+		
+		// Allocates flights to both gates with random flight codes
+		gid.allocate(0, 8080);
+		gid.allocate(1, 676767); 
+		
+		//Ensures the gates have been allocated correctly and have been set to reserved(1)
+		assertEquals(1, gid.getStatus(0)); 
+		assertEquals(1, gid.getStatus(1)); 
+		
+		//Changes the status code from reserved(1) to occupied(2)
+		gid.docked(0);  
+		gid.docked(1);  
+		
+		//Ensures that status code 2 has been set for both gates
+		assertEquals(2, gid.getStatus(0)); 
+		assertEquals(2, gid.getStatus(1)); 
+
+	}
+	/**
+	 * This test case is a complete run through of every possible status that a gate can be in.
+	 * Ensures are allocated properly with appropriate status code
+	 * Ensures once a flight has been allocated a gate, it can change its status to occupied
+	 * Ensures that the flight is departed, the gate can be freed
+	 */
+	@Test
+	public void testDeparted() {
+		
+		//Ensures that gates are initalized to status code(0) or "free"		
+		assertEquals(0, gid.getStatus(0));
+		assertEquals(0, gid.getStatus(1));
+
+		// Allocates flights to both gates with random flight codes
+		gid.allocate(0, 6969); 
+		gid.allocate(1, 1965); 
+		
+		
+		//Ensures the gates are initalized to status code(1) or "reserved"
+		assertEquals(1, gid.getStatus(0)); 
+		assertEquals(1, gid.getStatus(1)); 
+		
+		//Changes the status code from reserved(1) to occupied(2)
+		gid.docked(0);  
+		gid.docked(1);  
+		
+		//Ensures that status code 2 has been set for both gates
+		assertEquals(2, gid.getStatus(0));
+		assertEquals(2, gid.getStatus(1)); 
+		
+		//Changes the status code from occupied(2)  to free(0) to free the gates up	
+		gid.departed(0); 
+		gid.departed(1); 
+
+		//Ensures that status code 0 has been set for both gates		
+		assertEquals(0, gid.getStatus(0)); 
+		assertEquals(0, gid.getStatus(1));
+	}
+
+}

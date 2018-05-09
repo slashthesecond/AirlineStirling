@@ -1,0 +1,68 @@
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class GateInfoDatabaseTests {
+
+	GateInfoDatabase gib;
+
+	@Before
+	public void setUp() {
+		gib = new GateInfoDatabase();
+	}
+
+	@Test
+	public void testGetStatus() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetStatuses() {
+
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Takes a gate number and a flight code, allocates it a gate and checks if the
+	 * gates have been filled (Reserved, not occupied)
+	 */
+
+	@Test
+	public void testAllocate() {
+
+		gib.allocate(0, 8080);
+		gib.allocate(1, 676767);
+
+		assertEquals(1, gib.getStatus(1));
+		assertEquals(1, gib.getStatus(0));
+
+	}
+
+	/**
+	 * Testing to see the status of the gates. Firstly if they are free, then if
+	 * they are then filled.
+	 */
+
+	@Test
+	public void testDocked() {
+
+		assertEquals(0, gib.getStatus(0));
+		assertEquals(0, gib.getStatus(1));
+
+		gib.allocate(0, 8080);
+		gib.allocate(1, 676767);
+
+		assertEquals(1, gib.getStatus(0));
+		assertEquals(1, gib.getStatus(1));
+
+	}
+
+	@Test
+	public void testDeparted() {
+
+		fail("Not yet implemented");
+
+	}
+
+}
